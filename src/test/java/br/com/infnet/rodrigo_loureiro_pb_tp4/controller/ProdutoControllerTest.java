@@ -51,23 +51,25 @@ public class ProdutoControllerTest {
     @Test
     public void requisicoesListarProdutosDeveSobrecarregarOSistema() throws InterruptedException, ExecutionException {
         int totalRequests = 30;
-        ExecutorService executor = Executors.newFixedThreadPool(totalRequests);
+        List<Future<Integer>> futures;
+        try (ExecutorService executor = Executors.newFixedThreadPool(totalRequests)) {
 
-        when(produtoServiceMock.listar()).thenAnswer(invocation -> {
-            Thread.sleep(200);
-            return Collections.emptyList();
-        });
-
-        List<Callable<Integer>> tasks = new ArrayList<>();
-        for (int i = 0; i < totalRequests; i++) {
-            tasks.add(() -> {
-                ResponseEntity<ProdutoResponsePayload> response = produtoController.listar();
-                return response.getStatusCode().value();
+            when(produtoServiceMock.listar()).thenAnswer(invocation -> {
+                Thread.sleep(200);
+                return Collections.emptyList();
             });
-        }
 
-        List<Future<Integer>> futures = executor.invokeAll(tasks);
-        executor.shutdown();
+            List<Callable<Integer>> tasks = new ArrayList<>();
+            for (int i = 0; i < totalRequests; i++) {
+                tasks.add(() -> {
+                    ResponseEntity<ProdutoResponsePayload> response = produtoController.listar();
+                    return response.getStatusCode().value();
+                });
+            }
+
+            futures = executor.invokeAll(tasks);
+            executor.shutdown();
+        }
 
         int count429 = 0;
         for (Future<Integer> future : futures) {
