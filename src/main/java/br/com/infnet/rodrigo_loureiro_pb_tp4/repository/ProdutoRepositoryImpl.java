@@ -10,6 +10,7 @@ import java.util.*;
 
 @Repository
 public class ProdutoRepositoryImpl implements ProdutoRepository {
+    private static final Produto PRODUTO_NULO = new ProdutoNulo();
     private final HashMap<UUID, Produto> produtos;
 
     public ProdutoRepositoryImpl() {
@@ -28,20 +29,15 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     @Override
     public Produto buscarPorId(UUID id) {
         return Optional.ofNullable(produtos.get(id))
-                .orElse(new ProdutoNulo());
+                .orElse(PRODUTO_NULO);
     }
 
     @Override
     public List<Produto> buscarPorNome(String nome) {
-        List<Produto> encontrados = new ArrayList<>();
-
-        for (Produto produto : produtos.values()) {
-            if (produto.getNome().toLowerCase().contains(nome.toLowerCase())) {
-                encontrados.add(produto);
-            }
-        }
-
-        return encontrados;
+        return produtos.values()
+                .stream()
+                .filter(p -> p.getNome().toLowerCase().contains(nome.toLowerCase()))
+                .toList();
     }
 
     @Override
@@ -61,6 +57,8 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public void removerPorId(UUID id) {
+        if (buscarPorId(id).isNulo())
+            throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
         produtos.remove(id);
     }
 }
