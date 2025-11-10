@@ -13,7 +13,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
     private final HashMap<UUID, Produto> produtos;
 
     public ProdutoRepositoryImpl() {
-        this.produtos = MockProduto.gerarProdutos();
+        this.produtos = MockProduto.gerarMockProdutos();
     }
 
     @Override
