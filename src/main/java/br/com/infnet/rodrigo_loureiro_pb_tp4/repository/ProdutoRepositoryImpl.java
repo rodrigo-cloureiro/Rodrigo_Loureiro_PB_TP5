@@ -1,6 +1,5 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp4.repository;
 
-import br.com.infnet.rodrigo_loureiro_pb_tp4.exception.ProdutoNaoEncontradoException;
 import br.com.infnet.rodrigo_loureiro_pb_tp4.mock.MockProduto;
 import br.com.infnet.rodrigo_loureiro_pb_tp4.model.produto.Produto;
 import br.com.infnet.rodrigo_loureiro_pb_tp4.model.produto.ProdutoNulo;
@@ -48,17 +47,12 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
 
     @Override
     public Produto editar(UUID id, Produto produto) {
-        if (buscarPorId(id).isNulo())
-            throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
-
         produtos.put(id, produto);
         return produto;
     }
 
     @Override
     public void removerPorId(UUID id) {
-        if (buscarPorId(id).isNulo())
-            throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
         produtos.remove(id);
     }
 }

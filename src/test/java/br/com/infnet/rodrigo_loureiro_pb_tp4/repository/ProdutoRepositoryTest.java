@@ -116,23 +116,4 @@ public class ProdutoRepositoryTest {
         assertEquals(atualizado, resultado);
         assertEquals(2, resultado.getQuantidade());
     }
-
-    @Test
-    public void naoDeveAtualizarProdutoPorIdNaoExistir() {
-        UUID idInexistente = UUID.randomUUID();
-
-        Produto atualizado = new ProdutoReal.Builder()
-                .id(idPadrao)
-                .nome(nome)
-                .descricao(descricao)
-                .preco(preco)
-                .quantidade(2)
-                .build();
-        ProdutoNaoEncontradoException exception = assertThrows(
-                ProdutoNaoEncontradoException.class, () -> produtoRepository.editar(idInexistente, atualizado)
-        );
-
-        assertNotNull(exception);
-        assertEquals("Produto com ID " + idInexistente + " não encontrado!", exception.getMessage());
-    }
 }
