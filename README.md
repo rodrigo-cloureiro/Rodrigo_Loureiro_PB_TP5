@@ -99,3 +99,18 @@ Garantir que o fluxo de build → artefato → deploy esteja funcional, ainda qu
 
 ## 🛠️ Refatoração
 
+#### 1. [Remoção de código morto](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/6d2f58b30c8acd942287af9944b8c257c74c8d16)
+
+#### 2. [Substituição de declarações lambda por expressões lambda](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/7c15e9744ddc9f72c3cd3078ecf93c19ac930bb7)
+
+#### 3. [Implementação de try-with-resources](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/97c434514eba6bd9589c8252518b00f7d176f698)
+
+#### 4. [Adicionando verificação de cobertura mínima de 85% no jacoco](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/9fad96a827cfbe42894f9ebc021ed3d266dcce77)
+
+#### 5. [Tornando o nome do método do mais intuitivo, implementando método privado para criar o produto e substituindo valores mágicos por constantes](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/c221db528bb48c32f75f1e36621379c01aea1656)
+
+#### 6. [Tornando o método buscarPorNome mais legível e moderno, constante ProdutoNulo para evitar criação a cada chamada de buscarPorId e implementando validação de existência no método removerPorId](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/f18379f3b4fa34e407458df72f4de770bfd7fd22)
+
+#### 7. [Utilizando método buscarPorId para evitar lógica de verificação duplicada](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/cf790523ba9f24a81a778cbfdaaccec5f07c1769)
+
+#### 8. [Separação de responsabilidades: Repository é responsável apenas pelo CRUD. Validação/lógica é realizada pelo Service](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP4/commit/7f040e1ed6cfd1e7eed9700c88c48dacd0ad4aa0)

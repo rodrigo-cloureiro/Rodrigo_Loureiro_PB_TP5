@@ -115,7 +115,7 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>**/RodrigoLoureiroPbTp3Application.class</exclude>
+                                <exclude>**/RodrigoLoureiroPbTp4Application.class</exclude>
                                 <exclude>**/ProdutoViewController.class</exclude>
                                 <exclude>**/model/**</exclude>
                                 <exclude>**/mapper/**</exclude>
