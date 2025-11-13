@@ -9,9 +9,14 @@ O objetivo é fornecer uma base sólida para desenvolvimento, testes e deploy co
 
 ### ✅ Pré-requisitos
 
-- Java 21+
+- Java 21
 - Maven 3.5.6
-- Git
+- Junit 5.13.4
+- Spring Boot 3.5.6
+- Mockito 5.20.0
+- Selenium 4.36.0
+- WebDriverManager 6.3.2
+- JaCoCo 0.8.12
 
 ### 💻 Como executar a aplicação
 
@@ -32,6 +37,20 @@ mvn spring-boot:run
 
 ```bash
 http://localhost:8080
+```
+
+### 🧪 Como executar os testes
+
+#### 1. Executar testes
+
+```bash
+mvn test
+```
+
+#### 2. Executar testes ignorando testes com Selenium
+
+```bash
+mvn test -Dgroups=!Selenium -B
 ```
 
 ### ▶️ Como executar e interpretar o workflow
