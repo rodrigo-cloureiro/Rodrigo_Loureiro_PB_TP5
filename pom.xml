@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.infnet</groupId>
-    <artifactId>Rodrigo_Loureiro_PB_TP4</artifactId>
+    <artifactId>Rodrigo_Loureiro_PB_TP5</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Rodrigo_Loureiro_PB_TP4</name>
-    <description>Rodrigo_Loureiro_PB_TP4</description>
+    <name>Rodrigo_Loureiro_PB_TP5</name>
+    <description>Rodrigo_Loureiro_PB_TP5</description>
     <url/>
     <licenses>
         <license/>
@@ -115,7 +115,7 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>**/RodrigoLoureiroPbTp4Application.class</exclude>
+                                <exclude>**/RodrigoLoureiroPbTp5Application.class</exclude>
                                 <exclude>**/ProdutoViewController.class</exclude>
                                 <exclude>**/model/**</exclude>
                                 <exclude>**/mapper/**</exclude>
