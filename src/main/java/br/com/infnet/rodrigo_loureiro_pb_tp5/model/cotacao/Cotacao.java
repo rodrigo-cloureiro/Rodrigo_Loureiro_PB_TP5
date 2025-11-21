@@ -32,7 +32,7 @@ public class Cotacao {
     private String createDate;
 
     private final HttpClient httpClient;
-    private final String BASE_URL = "https://economia.awesomeapi.com.br/last/BRL-";
+    private static final String BASE_URL = "https://economia.awesomeapi.com.br/last/BRL-";
 
     public Cotacao() {
         this.httpClient = HttpClient.newBuilder().build();

@@ -14,7 +14,7 @@ public class ProdutoReal implements Produto {
     private final String descricao;
     private final BigDecimal preco;
     private final int quantidade;
-    private final boolean nulo = false;
+    private final boolean nulo;
 
     private ProdutoReal(Builder builder) {
         this.id = builder.id;
@@ -22,6 +22,7 @@ public class ProdutoReal implements Produto {
         this.descricao = builder.descricao;
         this.preco = builder.preco;
         this.quantidade = builder.quantidade;
+        this.nulo = false;
     }
 
     public static class Builder {
