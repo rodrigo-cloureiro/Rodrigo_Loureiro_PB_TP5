@@ -1,7 +1,8 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.model.cotacao;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

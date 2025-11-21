@@ -3,8 +3,12 @@ package br.com.infnet.rodrigo_loureiro_pb_tp5.repository;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.mock.MockProduto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.Produto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoNulo;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.stereotype.Repository;
-import java.util.*;
 
 @Repository
 public class ProdutoRepositoryImpl implements ProdutoRepository {

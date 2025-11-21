@@ -1,9 +1,10 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto;
 
 import br.com.infnet.rodrigo_loureiro_pb_tp5.validation.ProdutoValidator;
-import lombok.*;
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @ToString

@@ -1,9 +1,12 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto;
 
-import lombok.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor

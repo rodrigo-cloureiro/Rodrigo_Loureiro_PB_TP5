@@ -1,7 +1,9 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto;
 
-import lombok.*;
 import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor

@@ -4,7 +4,6 @@ import br.com.infnet.rodrigo_loureiro_pb_tp5.exception.ConversaoMoedaException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import lombok.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -12,6 +11,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @ToString
 @Getter
