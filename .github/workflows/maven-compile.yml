@@ -1,0 +1,25 @@
+name: Maven Compile
+
+on:
+  workflow_call: { }
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK (Java 21)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compilar com Maven
+        run: |
+          mvn clean compile -B || { 
+            echo "::error::Falha na compilação do projeto. Verifique erros de sintaxe ou dependências ausentes."; 
+            exit 1; 
+          }
