@@ -118,10 +118,7 @@
               <excludes>
                 <exclude>**/RodrigoLoureiroPbTp5Application.class</exclude>
                 <exclude>**/ProdutoViewController.class</exclude>
-                <exclude>**/model/**</exclude>
                 <exclude>**/mapper/**</exclude>
-                <exclude>**/mock/**</exclude>
-                <exclude>**/exception/**</exclude>
               </excludes>
             </configuration>
           </execution>
