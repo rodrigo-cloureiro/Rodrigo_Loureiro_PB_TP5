@@ -11,7 +11,7 @@ on:
 
 jobs:
   analyse:
-    name: Análise com CodeQL
+    name: Análise do código
     runs-on: ubuntu-latest
 
     permissions:
@@ -32,7 +32,7 @@ jobs:
         run: mkdir -p reports/${{ github.ref_name }}
 
       - name: Cache Maven
-        uses: ./.github/workflows/maven-cache.yml@main
+        uses: ./.github/workflows/maven-cache.yml
 
       - name: Inicializar CodeQL
         uses: github/codeql-action/init@v4
@@ -41,7 +41,7 @@ jobs:
           queries: security-extended,security-and-quality
 
       - name: Configurar JDK (Java 21) e compilar projeto com Maven
-        uses: ./.github/workflows/maven-compile.yml@main
+        uses: ./.github/workflows/maven-compile.yml
 
       - name: Executar análise de CodeQL
         uses: github/codeql-action/analyze@v4
