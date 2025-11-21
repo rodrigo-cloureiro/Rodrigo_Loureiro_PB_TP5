@@ -4,8 +4,8 @@ import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.Produto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDTO;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoReal;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
-import org.springframework.stereotype.Component;
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoMapperImpl implements ProdutoMapper {

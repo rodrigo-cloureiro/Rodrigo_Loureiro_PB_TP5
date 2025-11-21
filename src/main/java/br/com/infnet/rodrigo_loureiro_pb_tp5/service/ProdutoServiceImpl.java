@@ -1,16 +1,16 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.service;
 
 import br.com.infnet.rodrigo_loureiro_pb_tp5.exception.ProdutoNaoEncontradoException;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.mapper.ProdutoMapper;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.Produto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDTO;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.mapper.ProdutoMapper;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.repository.ProdutoRepository;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.validation.ProdutoValidator;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
