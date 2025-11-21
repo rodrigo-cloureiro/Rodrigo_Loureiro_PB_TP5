@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class ProdutoDTO {
+public class ProdutoDto {
 
   private UUID id;
   private String nome;

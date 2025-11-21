@@ -1,21 +1,21 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.service;
 
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDTO;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDto;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDto;
 import java.util.List;
 import java.util.UUID;
 
 public interface ProdutoService {
 
-  List<ProdutoDTO> listar();
+  List<ProdutoDto> listar();
 
-  ProdutoDTO buscarPorId(UUID id);
+  ProdutoDto buscarPorId(UUID id);
 
-  List<ProdutoDTO> buscarPorNome(String nome);
+  List<ProdutoDto> buscarPorNome(String nome);
 
-  ProdutoDTO salvar(ProdutoRequestDTO request);
+  ProdutoDto salvar(ProdutoRequestDto request);
 
-  ProdutoDTO editar(UUID id, ProdutoRequestDTO request);
+  ProdutoDto editar(UUID id, ProdutoRequestDto request);
 
   void removerPorId(UUID id);
 }

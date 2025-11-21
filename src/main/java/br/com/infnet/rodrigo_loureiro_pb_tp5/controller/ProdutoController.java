@@ -2,8 +2,8 @@ package br.com.infnet.rodrigo_loureiro_pb_tp5.controller;
 
 import br.com.infnet.rodrigo_loureiro_pb_tp5.exception.EntradaInvalidaException;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.exception.ProdutoNaoEncontradoException;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDTO;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDto;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoResponsePayload;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.service.ProdutoService;
 import java.util.List;
@@ -43,7 +43,7 @@ public class ProdutoController implements ProdutoOperacoes {
     }
 
     try {
-      List<ProdutoDTO> produtos = produtoService.listar();
+      List<ProdutoDto> produtos = produtoService.listar();
       return ResponseEntity.ok(ProdutoResponsePayload.builder()
           .mensagem(HttpStatus.OK.toString())
           .produtos(produtos)
@@ -57,10 +57,10 @@ public class ProdutoController implements ProdutoOperacoes {
   @Override
   public ResponseEntity<ProdutoResponsePayload> buscarPorId(UUID id) {
     try {
-      ProdutoDTO produtoDTO = produtoService.buscarPorId(id);
+      ProdutoDto produtoDto = produtoService.buscarPorId(id);
       return ResponseEntity.ok(ProdutoResponsePayload.builder()
           .mensagem(HttpStatus.OK.toString())
-          .produtos(List.of(produtoDTO))
+          .produtos(List.of(produtoDto))
           .build()
       );
     } catch (ProdutoNaoEncontradoException ex) {
@@ -74,10 +74,10 @@ public class ProdutoController implements ProdutoOperacoes {
   @Override
   public ResponseEntity<ProdutoResponsePayload> buscarPorNome(String nome) {
     try {
-      List<ProdutoDTO> produtosDTO = produtoService.buscarPorNome(nome);
+      List<ProdutoDto> produtosDto = produtoService.buscarPorNome(nome);
       return ResponseEntity.ok(ProdutoResponsePayload.builder()
           .mensagem(HttpStatus.OK.toString())
-          .produtos(produtosDTO)
+          .produtos(produtosDto)
           .build()
       );
     } catch (ProdutoNaoEncontradoException ex) {
@@ -89,12 +89,12 @@ public class ProdutoController implements ProdutoOperacoes {
   }
 
   @Override
-  public ResponseEntity<ProdutoResponsePayload> salvar(ProdutoRequestDTO produto) {
+  public ResponseEntity<ProdutoResponsePayload> salvar(ProdutoRequestDto produto) {
     try {
-      ProdutoDTO produtoDTO = produtoService.salvar(produto);
+      ProdutoDto produtoDto = produtoService.salvar(produto);
       return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoResponsePayload.builder()
           .mensagem(HttpStatus.CREATED.toString())
-          .produtos(List.of(produtoDTO))
+          .produtos(List.of(produtoDto))
           .build()
       );
     } catch (EntradaInvalidaException ex) {
@@ -106,12 +106,12 @@ public class ProdutoController implements ProdutoOperacoes {
   }
 
   @Override
-  public ResponseEntity<ProdutoResponsePayload> editar(UUID id, ProdutoRequestDTO produto) {
+  public ResponseEntity<ProdutoResponsePayload> editar(UUID id, ProdutoRequestDto produto) {
     try {
-      ProdutoDTO produtoDTO = produtoService.editar(id, produto);
+      ProdutoDto produtoDto = produtoService.editar(id, produto);
       return ResponseEntity.ok(ProdutoResponsePayload.builder()
           .mensagem(HttpStatus.OK.toString())
-          .produtos(List.of(produtoDTO))
+          .produtos(List.of(produtoDto))
           .build()
       );
     } catch (ProdutoNaoEncontradoException ex) {

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class ProdutoRequestDTO {
+public class ProdutoRequestDto {
 
   private String nome;
   private String descricao;

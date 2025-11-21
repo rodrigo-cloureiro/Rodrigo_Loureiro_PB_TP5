@@ -1,6 +1,6 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.controller;
 
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoResponsePayload;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +25,11 @@ public interface ProdutoOperacoes {
   ResponseEntity<ProdutoResponsePayload> buscarPorNome(@PathVariable String nome);
 
   @PostMapping("/salvar")
-  ResponseEntity<ProdutoResponsePayload> salvar(@RequestBody ProdutoRequestDTO produto);
+  ResponseEntity<ProdutoResponsePayload> salvar(@RequestBody ProdutoRequestDto produto);
 
   @PutMapping("/editar/{id}")
   ResponseEntity<ProdutoResponsePayload> editar(@PathVariable UUID id,
-      @RequestBody ProdutoRequestDTO produto);
+      @RequestBody ProdutoRequestDto produto);
 
   @DeleteMapping("/remover/{id}")
   ResponseEntity<ProdutoResponsePayload> removerPorId(@PathVariable UUID id);

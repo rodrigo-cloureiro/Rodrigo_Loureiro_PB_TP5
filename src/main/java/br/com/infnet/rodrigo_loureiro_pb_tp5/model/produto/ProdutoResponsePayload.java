@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ProdutoResponsePayload {
 
   private String mensagem;
-  private List<ProdutoDTO> produtos;
+  private List<ProdutoDto> produtos;
   @Builder.Default
   private LocalDateTime dataHora = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 }

@@ -31,16 +31,16 @@ public class ProdutoControllerTest {
     private static final int quantidade = 10;
 
     private UUID idInexistente;
-    private ProdutoDTO produtoDTOPadrao;
-    private ProdutoRequestDTO produtoRequestDTOPadrao;
+    private ProdutoDto produtoDtoPadrao;
+    private ProdutoRequestDto produtoRequestDtoPadrao;
     private UUID idPadrao;
 
     @BeforeEach
     public void setUp() {
         this.idInexistente = UUID.randomUUID();
         this.idPadrao = UUID.randomUUID();
-        this.produtoDTOPadrao = new ProdutoDTO(idPadrao, nome, descricao, preco, quantidade);
-        this.produtoRequestDTOPadrao = new ProdutoRequestDTO(nome, descricao, preco, quantidade);
+        this.produtoDtoPadrao = new ProdutoDto(idPadrao, nome, descricao, preco, quantidade);
+        this.produtoRequestDtoPadrao = new ProdutoRequestDto(nome, descricao, preco, quantidade);
     }
 
     @AfterEach
@@ -82,7 +82,7 @@ public class ProdutoControllerTest {
 
     @Test
     public void deveRetornarProdutosComSucesso() {
-        List<ProdutoDTO> produtos = List.of(produtoDTOPadrao);
+        List<ProdutoDto> produtos = List.of(produtoDtoPadrao);
 
         when(produtoServiceMock.listar()).thenReturn(produtos);
 
@@ -97,7 +97,7 @@ public class ProdutoControllerTest {
 
     @Test
     public void deveRetornarProdutoPorIdComSucesso() {
-        when(produtoServiceMock.buscarPorId(idPadrao)).thenReturn(produtoDTOPadrao);
+        when(produtoServiceMock.buscarPorId(idPadrao)).thenReturn(produtoDtoPadrao);
 
         ResponseEntity<ProdutoResponsePayload> response = produtoController.buscarPorId(idPadrao);
 
@@ -128,9 +128,9 @@ public class ProdutoControllerTest {
     @Test
     public void deveRetornarProdutosPorNomeComSucesso() {
         String busca = "Mo";
-        List<ProdutoDTO> produtoDTOs = List.of(produtoDTOPadrao);
+        List<ProdutoDto> produtoDtos = List.of(produtoDtoPadrao);
 
-        when(produtoServiceMock.buscarPorNome(busca)).thenReturn(produtoDTOs);
+        when(produtoServiceMock.buscarPorNome(busca)).thenReturn(produtoDtos);
 
         ResponseEntity<ProdutoResponsePayload> response = produtoController.buscarPorNome(busca);
 
@@ -159,15 +159,16 @@ public class ProdutoControllerTest {
 
     @Test
     public void deveCriarProdutoComSucesso() {
-        when(produtoServiceMock.salvar(produtoRequestDTOPadrao)).thenReturn(produtoDTOPadrao);
+        when(produtoServiceMock.salvar(produtoRequestDtoPadrao)).thenReturn(produtoDtoPadrao);
 
-        ResponseEntity<ProdutoResponsePayload> response = produtoController.salvar(produtoRequestDTOPadrao);
+        ResponseEntity<ProdutoResponsePayload> response = produtoController.salvar(
+            produtoRequestDtoPadrao);
 
         assertEquals(201, response.getStatusCode().value());
         assertNotNull(response.getBody());
         assertEquals(1, response.getBody().getProdutos().size());
         assertEquals("201 CREATED", response.getBody().getMensagem());
-        verify(produtoServiceMock, times(1)).salvar(produtoRequestDTOPadrao);
+        verify(produtoServiceMock, times(1)).salvar(produtoRequestDtoPadrao);
     }
 
     @ParameterizedTest
@@ -179,7 +180,7 @@ public class ProdutoControllerTest {
     public void deveRetornarRespostaExcecaoQuandoSalvarProdutoInvalido(
             String nome, String descricao, BigDecimal preco, int quantidade
     ) {
-        ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO(nome, descricao, preco, quantidade);
+        ProdutoRequestDto produtoRequestDTO = new ProdutoRequestDto(nome, descricao, preco, quantidade);
         String mensagem = "";
 
         if (quantidade < 0)
@@ -201,8 +202,8 @@ public class ProdutoControllerTest {
 
     @Test
     public void deveEditarProdutoComSucesso() {
-        ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO(nome, descricao, preco, 5);
-        ProdutoDTO produtoDTO = new ProdutoDTO(idPadrao, nome, descricao, preco, 5);
+        ProdutoRequestDto produtoRequestDTO = new ProdutoRequestDto(nome, descricao, preco, 5);
+        ProdutoDto produtoDTO = new ProdutoDto(idPadrao, nome, descricao, preco, 5);
 
         when(produtoServiceMock.editar(idPadrao, produtoRequestDTO)).thenReturn(produtoDTO);
 
@@ -216,13 +217,14 @@ public class ProdutoControllerTest {
 
     @Test
     public void deveRetornarRespostaExcecaoQuandoEditarProdutoInexistente() {
-        ProdutoRequestDTO produtoRequestDTOMock = mock(ProdutoRequestDTO.class);
+        ProdutoRequestDto produtoRequestDtoMock = mock(ProdutoRequestDto.class);
 
-        when(produtoServiceMock.editar(idInexistente, produtoRequestDTOMock)).thenThrow(
+        when(produtoServiceMock.editar(idInexistente, produtoRequestDtoMock)).thenThrow(
                 new ProdutoNaoEncontradoException("Produto com ID " + idInexistente + " não encontrado!")
         );
 
-        ResponseEntity<ProdutoResponsePayload> response = produtoController.editar(idInexistente, produtoRequestDTOMock);
+        ResponseEntity<ProdutoResponsePayload> response = produtoController.editar(idInexistente,
+            produtoRequestDtoMock);
 
         assertEquals(404, response.getStatusCode().value());
         assertNotNull(response.getBody());
@@ -231,12 +233,12 @@ public class ProdutoControllerTest {
                 String.format("Produto com ID %s não encontrado!", idInexistente),
                 response.getBody().getMensagem()
         );
-        verify(produtoServiceMock, times(1)).editar(idInexistente, produtoRequestDTOMock);
+        verify(produtoServiceMock, times(1)).editar(idInexistente, produtoRequestDtoMock);
     }
 
     @Test
     public void deveRetornarRespostaExcecaoQuandoEditarProdutoRequestInvalido() {
-        ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO(
+        ProdutoRequestDto produtoRequestDTO = new ProdutoRequestDto(
                 nome, descricao, BigDecimal.valueOf(-5), quantidade
         );
 

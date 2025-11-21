@@ -34,8 +34,8 @@ public class ProdutoServiceImplTest {
     private static final int quantidade = 10;
 
     private Produto produtoPadrao;
-    private ProdutoDTO produtoDTOPadrao;
-    private ProdutoRequestDTO produtoRequestDTOPadrao;
+    private ProdutoDto produtoDtoPadrao;
+    private ProdutoRequestDto produtoRequestDtoPadrao;
     private ProdutoNulo produtoNuloPadrao;
     private UUID idPadrao;
 
@@ -49,8 +49,8 @@ public class ProdutoServiceImplTest {
                 .preco(preco)
                 .quantidade(quantidade)
                 .build();
-        this.produtoDTOPadrao = new ProdutoDTO(idPadrao, nome, descricao, preco, quantidade);
-        this.produtoRequestDTOPadrao = new ProdutoRequestDTO(nome, descricao, preco, quantidade);
+        this.produtoDtoPadrao = new ProdutoDto(idPadrao, nome, descricao, preco, quantidade);
+        this.produtoRequestDtoPadrao = new ProdutoRequestDto(nome, descricao, preco, quantidade);
         this.produtoNuloPadrao = new ProdutoNulo();
     }
 
@@ -62,15 +62,15 @@ public class ProdutoServiceImplTest {
     @Test
     public void listarDeveRetornarListaDeProdutos() {
         List<Produto> produtos = List.of(produtoPadrao);
-        List<ProdutoDTO> produtoDTOs = produtos.stream()
-                .map(produtoMapper::paraProdutoDTO)
+        List<ProdutoDto> produtoDtos = produtos.stream()
+                .map(produtoMapper::paraProdutoDto)
                 .toList();
 
         when(produtoRepository.listar()).thenReturn(produtos);
 
-        List<ProdutoDTO> resultado = produtoService.listar();
+        List<ProdutoDto> resultado = produtoService.listar();
 
-        assertEquals(produtoDTOs.size(), resultado.size());
+        assertEquals(produtoDtos.size(), resultado.size());
         verify(produtoRepository, times(1)).listar();
     }
 
@@ -80,13 +80,13 @@ public class ProdutoServiceImplTest {
 
         when(produtoRepository.buscarPorId(idPadrao)).thenReturn(produtoPadrao);
         when(produtoPadrao.isNulo()).thenReturn(false);
-        when(produtoMapper.paraProdutoDTO(produtoPadrao)).thenReturn(produtoDTOPadrao);
+        when(produtoMapper.paraProdutoDto(produtoPadrao)).thenReturn(produtoDtoPadrao);
 
-        ProdutoDTO resultado = produtoService.buscarPorId(idPadrao);
+        ProdutoDto resultado = produtoService.buscarPorId(idPadrao);
 
-        assertEquals(produtoDTOPadrao, resultado);
+        assertEquals(produtoDtoPadrao, resultado);
         verify(produtoRepository, times(1)).buscarPorId(idPadrao);
-        verify(produtoMapper, times(1)).paraProdutoDTO(produtoPadrao);
+        verify(produtoMapper, times(1)).paraProdutoDto(produtoPadrao);
     }
 
     @Test
@@ -106,11 +106,11 @@ public class ProdutoServiceImplTest {
         List<Produto> produtos = List.of(produtoPadrao);
 
         when(produtoRepository.buscarPorNome(nome)).thenReturn(produtos);
-        when(produtoMapper.paraProdutoDTO(any())).thenReturn(produtoDTOPadrao);
+        when(produtoMapper.paraProdutoDto(any())).thenReturn(produtoDtoPadrao);
 
-        List<ProdutoDTO> resultado = produtoService.buscarPorNome(nome);
+        List<ProdutoDto> resultado = produtoService.buscarPorNome(nome);
 
-        assertEquals(produtoDTOPadrao, resultado.getFirst());
+        assertEquals(produtoDtoPadrao, resultado.getFirst());
         assertEquals(1, resultado.size());
         verify(produtoRepository, times(1)).buscarPorNome(nome);
     }
@@ -129,20 +129,20 @@ public class ProdutoServiceImplTest {
 
     @Test
     public void salvarDeveRetornarDTOAposSucesso() {
-        when(produtoMapper.paraProduto(any(UUID.class), eq(produtoRequestDTOPadrao))).thenReturn(produtoPadrao);
-        when(produtoMapper.paraProdutoDTO(produtoPadrao)).thenReturn(produtoDTOPadrao);
+        when(produtoMapper.paraProduto(any(UUID.class), eq(produtoRequestDtoPadrao))).thenReturn(produtoPadrao);
+        when(produtoMapper.paraProdutoDto(produtoPadrao)).thenReturn(produtoDtoPadrao);
         when(produtoRepository.salvar(produtoPadrao)).thenReturn(produtoPadrao);
 
-        ProdutoDTO resultado = produtoService.salvar(produtoRequestDTOPadrao);
+        ProdutoDto resultado = produtoService.salvar(produtoRequestDtoPadrao);
 
         assertNotNull(resultado);
-        assertEquals(produtoDTOPadrao, resultado);
+        assertEquals(produtoDtoPadrao, resultado);
     }
 
     @Test
     public void editarDeveAtualizarProdutoQuandoProdutoExistir() {
-        ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO(nome, descricao, preco, 5);
-        ProdutoDTO produtoDTO = new ProdutoDTO(idPadrao, nome, descricao, preco, 5);
+        ProdutoRequestDto produtoRequestDTO = new ProdutoRequestDto(nome, descricao, preco, 5);
+        ProdutoDto produtoDTO = new ProdutoDto(idPadrao, nome, descricao, preco, 5);
         Produto produtoEditado = new ProdutoReal.Builder()
                 .id(idPadrao)
                 .nome(nome)
@@ -153,9 +153,9 @@ public class ProdutoServiceImplTest {
 
         when(produtoRepository.buscarPorId(idPadrao)).thenReturn(produtoPadrao);
         when(produtoMapper.paraProduto(idPadrao, produtoRequestDTO)).thenReturn(produtoEditado);
-        when(produtoMapper.paraProdutoDTO(produtoEditado)).thenReturn(produtoDTO);
+        when(produtoMapper.paraProdutoDto(produtoEditado)).thenReturn(produtoDTO);
 
-        ProdutoDTO resultado = produtoService.editar(idPadrao, produtoRequestDTO);
+        ProdutoDto resultado = produtoService.editar(idPadrao, produtoRequestDTO);
 
         assertEquals(produtoDTO, resultado);
         verify(produtoRepository).editar(idPadrao, produtoEditado);
@@ -169,7 +169,8 @@ public class ProdutoServiceImplTest {
         when(produtoNulo.isNulo()).thenReturn(true);
 
         ProdutoNaoEncontradoException exception = assertThrows(
-                ProdutoNaoEncontradoException.class, () -> produtoService.editar(idPadrao, produtoRequestDTOPadrao)
+                ProdutoNaoEncontradoException.class, () -> produtoService.editar(idPadrao,
+                produtoRequestDtoPadrao)
         );
         assertEquals(String.format("Produto com ID %s não encontrado!", idPadrao), exception.getMessage());
     }
@@ -208,7 +209,7 @@ public class ProdutoServiceImplTest {
     public void salvarDeveRetornarDTOComProdutosValidosDiferentes(
             String nome, String descricao, BigDecimal preco, int quantidade
     ) {
-        ProdutoRequestDTO produtoRequestDTO = new ProdutoRequestDTO(nome, descricao, preco, quantidade);
+        ProdutoRequestDto produtoRequestDTO = new ProdutoRequestDto(nome, descricao, preco, quantidade);
         Produto novoProduto = new ProdutoReal.Builder()
                 .id(idPadrao)
                 .nome(nome)
@@ -216,19 +217,19 @@ public class ProdutoServiceImplTest {
                 .preco(preco)
                 .quantidade(quantidade)
                 .build();
-        ProdutoDTO produtoDTO = new ProdutoDTO(idPadrao, nome, descricao, preco, quantidade);
+        ProdutoDto produtoDTO = new ProdutoDto(idPadrao, nome, descricao, preco, quantidade);
 
         when(produtoMapper.paraProduto(any(UUID.class), eq(produtoRequestDTO))).thenReturn(novoProduto);
         when(produtoRepository.salvar(novoProduto)).thenReturn(novoProduto);
-        when(produtoMapper.paraProdutoDTO(novoProduto)).thenReturn(produtoDTO);
+        when(produtoMapper.paraProdutoDto(novoProduto)).thenReturn(produtoDTO);
 
-        ProdutoDTO resultado = produtoService.salvar(produtoRequestDTO);
+        ProdutoDto resultado = produtoService.salvar(produtoRequestDTO);
 
         assertNotNull(resultado);
         assertEquals(produtoDTO, resultado);
         verify(produtoMapper).paraProduto(any(UUID.class), eq(produtoRequestDTO));
         verify(produtoRepository).salvar(novoProduto);
-        verify(produtoMapper).paraProdutoDTO(novoProduto);
+        verify(produtoMapper).paraProdutoDto(novoProduto);
     }
 
     @ParameterizedTest

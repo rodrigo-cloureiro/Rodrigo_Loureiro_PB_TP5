@@ -3,8 +3,8 @@ package br.com.infnet.rodrigo_loureiro_pb_tp5.service;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.exception.ProdutoNaoEncontradoException;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.mapper.ProdutoMapper;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.Produto;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDTO;
-import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoDto;
+import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDto;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.repository.ProdutoRepository;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.validation.ProdutoValidator;
 import java.util.List;
@@ -20,25 +20,25 @@ public class ProdutoServiceImpl implements ProdutoService {
   private final ProdutoMapper produtoMapper;
 
   @Override
-  public List<ProdutoDTO> listar() {
+  public List<ProdutoDto> listar() {
     return produtoRepository.listar()
         .stream()
-        .map(produtoMapper::paraProdutoDTO)
+        .map(produtoMapper::paraProdutoDto)
         .toList();
   }
 
   @Override
-  public ProdutoDTO buscarPorId(UUID id) {
+  public ProdutoDto buscarPorId(UUID id) {
     Produto produto = produtoRepository.buscarPorId(id);
     if (produto.isNulo()) {
       throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
     }
 
-    return produtoMapper.paraProdutoDTO(produto);
+    return produtoMapper.paraProdutoDto(produto);
   }
 
   @Override
-  public List<ProdutoDTO> buscarPorNome(String nome) {
+  public List<ProdutoDto> buscarPorNome(String nome) {
     ProdutoValidator.validarTexto(nome, "nome");
 
     List<Produto> produtos = produtoRepository.buscarPorNome(nome);
@@ -47,25 +47,25 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     return produtos.stream()
-        .map(produtoMapper::paraProdutoDTO)
+        .map(produtoMapper::paraProdutoDto)
         .toList();
   }
 
   @Override
-  public ProdutoDTO salvar(ProdutoRequestDTO request) {
+  public ProdutoDto salvar(ProdutoRequestDto request) {
     UUID novoId = UUID.randomUUID();
     Produto novoProduto = produtoMapper.paraProduto(novoId, request);
     Produto produtoSalvo = produtoRepository.salvar(novoProduto);
 
-    return produtoMapper.paraProdutoDTO(produtoSalvo);
+    return produtoMapper.paraProdutoDto(produtoSalvo);
   }
 
   @Override
-  public ProdutoDTO editar(UUID id, ProdutoRequestDTO request) {
+  public ProdutoDto editar(UUID id, ProdutoRequestDto request) {
     buscarPorId(id);
     Produto produtoEditado = produtoMapper.paraProduto(id, request);
     produtoRepository.editar(id, produtoEditado);
-    return produtoMapper.paraProdutoDTO(produtoEditado);
+    return produtoMapper.paraProdutoDto(produtoEditado);
   }
 
   @Override
