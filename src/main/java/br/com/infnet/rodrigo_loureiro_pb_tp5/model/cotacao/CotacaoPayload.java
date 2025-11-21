@@ -6,7 +6,8 @@ import lombok.*;
 @Getter
 @Setter
 public class CotacaoPayload {
-    //    @JsonProperty("BRLUSD")
-    @JsonAlias({"BRLUSD", "BRLEUR"})
-    private Cotacao cotacao;
+
+  //    @JsonProperty("BRLUSD")
+  @JsonAlias({"BRLUSD", "BRLEUR"})
+  private Cotacao cotacao;
 }

@@ -1,7 +1,6 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto;
 
 import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -9,9 +8,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 public class ProdutoDTO {
-    private UUID id;
-    private String nome;
-    private String descricao;
-    private BigDecimal preco;
-    private int quantidade;
+
+  private UUID id;
+  private String nome;
+  private String descricao;
+  private BigDecimal preco;
+  private int quantidade;
 }

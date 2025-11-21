@@ -4,26 +4,27 @@ import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoRequestDTO;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.ProdutoResponsePayload;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
 
 @RequestMapping("/produtos")
 public interface ProdutoOperacoes {
-    @GetMapping("/listar")
-    ResponseEntity<ProdutoResponsePayload> listar();
 
-    @GetMapping("/listar/id/{id}")
-    ResponseEntity<ProdutoResponsePayload> buscarPorId(@PathVariable UUID id);
+  @GetMapping("/listar")
+  ResponseEntity<ProdutoResponsePayload> listar();
 
-    @GetMapping("/listar/nome/{nome}")
-    ResponseEntity<ProdutoResponsePayload> buscarPorNome(@PathVariable String nome);
+  @GetMapping("/listar/id/{id}")
+  ResponseEntity<ProdutoResponsePayload> buscarPorId(@PathVariable UUID id);
 
-    @PostMapping("/salvar")
-    ResponseEntity<ProdutoResponsePayload> salvar(@RequestBody ProdutoRequestDTO produto);
+  @GetMapping("/listar/nome/{nome}")
+  ResponseEntity<ProdutoResponsePayload> buscarPorNome(@PathVariable String nome);
 
-    @PutMapping("/editar/{id}")
-    ResponseEntity<ProdutoResponsePayload> editar(@PathVariable UUID id, @RequestBody ProdutoRequestDTO produto);
+  @PostMapping("/salvar")
+  ResponseEntity<ProdutoResponsePayload> salvar(@RequestBody ProdutoRequestDTO produto);
 
-    @DeleteMapping("/remover/{id}")
-    ResponseEntity<ProdutoResponsePayload> removerPorId(@PathVariable UUID id);
+  @PutMapping("/editar/{id}")
+  ResponseEntity<ProdutoResponsePayload> editar(@PathVariable UUID id,
+      @RequestBody ProdutoRequestDTO produto);
+
+  @DeleteMapping("/remover/{id}")
+  ResponseEntity<ProdutoResponsePayload> removerPorId(@PathVariable UUID id);
 }

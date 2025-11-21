@@ -9,66 +9,68 @@ import br.com.infnet.rodrigo_loureiro_pb_tp5.repository.ProdutoRepository;
 import br.com.infnet.rodrigo_loureiro_pb_tp5.validation.ProdutoValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
-    private final ProdutoRepository produtoRepository;
-    private final ProdutoMapper produtoMapper;
 
-    @Override
-    public List<ProdutoDTO> listar() {
-        return produtoRepository.listar()
-                .stream()
-                .map(produtoMapper::paraProdutoDTO)
-                .toList();
+  private final ProdutoRepository produtoRepository;
+  private final ProdutoMapper produtoMapper;
+
+  @Override
+  public List<ProdutoDTO> listar() {
+    return produtoRepository.listar()
+        .stream()
+        .map(produtoMapper::paraProdutoDTO)
+        .toList();
+  }
+
+  @Override
+  public ProdutoDTO buscarPorId(UUID id) {
+    Produto produto = produtoRepository.buscarPorId(id);
+    if (produto.isNulo()) {
+      throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
     }
 
-    @Override
-    public ProdutoDTO buscarPorId(UUID id) {
-        Produto produto = produtoRepository.buscarPorId(id);
-        if (produto.isNulo())
-            throw new ProdutoNaoEncontradoException("Produto com ID " + id + " não encontrado!");
+    return produtoMapper.paraProdutoDTO(produto);
+  }
 
-        return produtoMapper.paraProdutoDTO(produto);
+  @Override
+  public List<ProdutoDTO> buscarPorNome(String nome) {
+    ProdutoValidator.validarTexto(nome, "nome");
+
+    List<Produto> produtos = produtoRepository.buscarPorNome(nome);
+    if (produtos.isEmpty()) {
+      throw new ProdutoNaoEncontradoException("Produto com nome '" + nome + "' não encontrado!");
     }
 
-    @Override
-    public List<ProdutoDTO> buscarPorNome(String nome) {
-        ProdutoValidator.validarTexto(nome, "nome");
+    return produtos.stream()
+        .map(produtoMapper::paraProdutoDTO)
+        .toList();
+  }
 
-        List<Produto> produtos = produtoRepository.buscarPorNome(nome);
-        if (produtos.isEmpty())
-            throw new ProdutoNaoEncontradoException("Produto com nome '" + nome + "' não encontrado!");
+  @Override
+  public ProdutoDTO salvar(ProdutoRequestDTO request) {
+    UUID novoId = UUID.randomUUID();
+    Produto novoProduto = produtoMapper.paraProduto(novoId, request);
+    Produto produtoSalvo = produtoRepository.salvar(novoProduto);
 
-        return produtos.stream()
-                .map(produtoMapper::paraProdutoDTO)
-                .toList();
-    }
+    return produtoMapper.paraProdutoDTO(produtoSalvo);
+  }
 
-    @Override
-    public ProdutoDTO salvar(ProdutoRequestDTO request) {
-        UUID novoId = UUID.randomUUID();
-        Produto novoProduto = produtoMapper.paraProduto(novoId, request);
-        Produto produtoSalvo = produtoRepository.salvar(novoProduto);
+  @Override
+  public ProdutoDTO editar(UUID id, ProdutoRequestDTO request) {
+    buscarPorId(id);
+    Produto produtoEditado = produtoMapper.paraProduto(id, request);
+    produtoRepository.editar(id, produtoEditado);
+    return produtoMapper.paraProdutoDTO(produtoEditado);
+  }
 
-        return produtoMapper.paraProdutoDTO(produtoSalvo);
-    }
-
-    @Override
-    public ProdutoDTO editar(UUID id, ProdutoRequestDTO request) {
-        buscarPorId(id);
-        Produto produtoEditado = produtoMapper.paraProduto(id, request);
-        produtoRepository.editar(id, produtoEditado);
-        return produtoMapper.paraProdutoDTO(produtoEditado);
-    }
-
-    @Override
-    public void removerPorId(UUID id) {
-        buscarPorId(id);
-        produtoRepository.removerPorId(id);
-    }
+  @Override
+  public void removerPorId(UUID id) {
+    buscarPorId(id);
+    produtoRepository.removerPorId(id);
+  }
 }

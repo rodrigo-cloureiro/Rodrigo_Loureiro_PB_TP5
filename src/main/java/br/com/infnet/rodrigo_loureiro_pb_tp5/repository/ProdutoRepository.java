@@ -1,20 +1,20 @@
 package br.com.infnet.rodrigo_loureiro_pb_tp5.repository;
 
 import br.com.infnet.rodrigo_loureiro_pb_tp5.model.produto.Produto;
-
 import java.util.List;
 import java.util.UUID;
 
 public interface ProdutoRepository {
-    List<Produto> listar();
 
-    Produto buscarPorId(UUID id);
+  List<Produto> listar();
 
-    List<Produto> buscarPorNome(String nome);
+  Produto buscarPorId(UUID id);
 
-    Produto salvar(Produto produto);
+  List<Produto> buscarPorNome(String nome);
 
-    Produto editar(UUID id, Produto produto);
+  Produto salvar(Produto produto);
 
-    void removerPorId(UUID id);
+  Produto editar(UUID id, Produto produto);
+
+  void removerPorId(UUID id);
 }
