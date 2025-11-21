@@ -29,10 +29,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Criar pasta para os relatórios
-        run: mkdir -p reports/${{ github.ref_name }}
+        run: mkdir -p reports/${{ github.head_ref || github.ref_name }}
 
       - name: Cache Maven
-        uses: ./.github/workflows/maven-cache.yml
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Inicializar CodeQL
         uses: github/codeql-action/init@v4
@@ -40,19 +45,29 @@ jobs:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
 
-      - name: Configurar JDK (Java 21) e compilar projeto com Maven
-        uses: ./.github/workflows/maven-compile.yml
+      - name: Configurar JDK (Java 21)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compilar com Maven
+        run: |
+          mvn clean compile -B || { 
+            echo "::error::Falha na compilação do projeto. Verifique erros de sintaxe ou dependências ausentes."; 
+            exit 1; 
+          }
 
       - name: Executar análise de CodeQL
         uses: github/codeql-action/analyze@v4
         with:
-          output: reports/${{ github.ref_name }}
+          output: reports/${{ github.head_ref || github.ref_name }}
           category: "/language:${{ matrix.language }}"
 
       - name: Renomear arquivo SARIF
         run: |
-          ORIGINAL="reports/${{ github.ref_name }}/${{ matrix.language }}.sarif"
-          NOVO="reports/${{ github.ref_name }}/codeql-results.sarif"
+          ORIGINAL="reports/${{ github.head_ref || github.ref_name }}/${{ matrix.language }}.sarif"
+          NOVO="reports/${{ github.head_ref || github.ref_name }}/codeql-results.sarif"
           mv "$ORIGINAL" "$NOVO"
 
       - name: Executar CLOC
@@ -61,27 +76,27 @@ jobs:
           options: --exclude-lang=YAML --md --report-file=cloc.md
 
       - name: Mover CLOC report
-        run: mv cloc.md reports/${{ github.ref_name }}/cloc.md
+        run: mv cloc.md reports/${{ github.head_ref || github.ref_name }}/cloc.md
 
       - name: Executar Checkstyle (Maven)
         run: mvn checkstyle:checkstyle
 
       - name: Preparar pasta para report do Checkstyle
-        run: mkdir -p reports/${{ github.ref_name }}/checkstyle-result
+        run: mkdir -p reports/${{ github.head_ref || github.ref_name }}/checkstyle-result
 
       - name: Mover report Checkstyle
         run: |
-          mv target/site/css reports/${{ github.ref_name }}/checkstyle-result/css
-          mv target/site/images reports/${{ github.ref_name }}/checkstyle-result/images
-          mv target/site/checkstyle.html reports/${{ github.ref_name }}/checkstyle-result
+          mv target/site/css reports/${{ github.head_ref || github.ref_name }}/checkstyle-result/css
+          mv target/site/images reports/${{ github.head_ref || github.ref_name }}/checkstyle-result/images
+          mv target/site/checkstyle.html reports/${{ github.head_ref || github.ref_name }}/checkstyle-result
 
       - name: Executar SpotBugs
         run: mvn spotbugs:spotbugs
 
       - name: Mover report SpotBugs
         run: |
-          mv target/spotbugsXml.xml reports/${{ github.ref_name }}/spotbugs.xml
-          mv target/site/spotbugs.html reports/${{ github.ref_name }}/spotbugs.html
+          mv target/spotbugsXml.xml reports/${{ github.head_ref || github.ref_name }}/spotbugs.xml
+          mv target/site/spotbugs.html reports/${{ github.head_ref || github.ref_name }}/spotbugs.html
 
       - name: Executar testes
         run: |
@@ -91,13 +106,13 @@ jobs:
           }
 
       - name: Mover report JaCoCo
-        run: mv target/site/jacoco/ reports/${{ github.ref_name }}/jacoco
+        run: mv target/site/jacoco/ reports/${{ github.head_ref || github.ref_name }}/jacoco
 
       - name: Upload dos reports
         uses: actions/upload-artifact@v4
         with:
-          name: "reports-${{ github.ref_name }}"
-          path: reports/${{ github.ref_name }}
+          name: "reports-${{ github.head_ref || github.ref_name }}"
+          path: reports/${{ github.head_ref || github.ref_name }}
 
   build:
     needs: analyse
@@ -108,10 +123,25 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cache Maven
-        uses: ./.github/workflows/maven-cache.yml
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
-      - name: Configurar JDK (Java 21) e compilar projeto com Maven
-        uses: ./.github/workflows/maven-compile.yml@main
+      - name: Configurar JDK (Java 21)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compilar com Maven
+        run: |
+          mvn clean compile -B || { 
+            echo "::error::Falha na compilação do projeto. Verifique erros de sintaxe ou dependências ausentes."; 
+            exit 1; 
+          }
 
       - name: Empacotar aplicação
         run: |
