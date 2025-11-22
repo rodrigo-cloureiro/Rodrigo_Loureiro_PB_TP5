@@ -193,9 +193,6 @@ jobs:
       - deploy-dev
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
       - name: Docker Login
         uses: docker/login-action@v3
         with:
@@ -220,9 +217,6 @@ jobs:
       - deploy-homol
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
-
       - name: Docker Login
         uses: docker/login-action@v3
         with:
