@@ -1,5 +1,4 @@
-// const API_URL = 'http://localhost:8080';
-const API_URL = 'http://tp5-app:8080';
+const API_URL = 'http://localhost:8080';
 
 const form = document.querySelector('#produto-form');
 const tabela = document.querySelector('#tabela-produtos');

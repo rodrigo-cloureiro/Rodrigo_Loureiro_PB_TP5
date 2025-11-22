@@ -12,8 +12,7 @@ import java.time.Duration;
 public class BasePage {
     protected final WebDriver driver;
     protected final WebDriverWait wait;
-    // protected final String BASE_URL = "http://localhost:8080";
-    protected final String BASE_URL = "http://tp5-app:8080";
+    protected final String BASE_URL = "http://localhost:8080";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
