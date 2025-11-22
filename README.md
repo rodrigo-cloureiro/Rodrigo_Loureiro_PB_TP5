@@ -6,6 +6,54 @@ Este projeto é uma aplicação Java Spring Boot integrada com pipelines automat
 Actions.
 O objetivo é fornecer uma base sólida para desenvolvimento, testes e deploy contínuo.
 
+## 🏛️ Arquitetura do Sistema
+
+O sistema segue uma arquitetura multicamadas organizada em Controller → Service → Repository,
+utilizando também DTOs, Builder Pattern, Null Object Pattern, validações centralizadas e integração
+externa via HTTP Client.
+
+`Camada de Controlador (REST Controllers + Views)`
+
+⬇
+
+`Camada de Serviço (Regra de negócio + validação)`
+
+⬇
+
+`Camada de Repositório (Simulação de persistência)`
+
+⬇
+
+`Domain / Model (Produto, DTOs, Builder)`
+
+```bash
+Camada de Apresentação
+  ├── ProdutoController
+  ├── ProdutoViewController
+
+Camada de Serviço
+  ├── ProdutoServiceImpl
+  └── ProdutoValidator
+
+Camada de Repositório
+  ├── ProdutoRepositoryImpl
+  └── MockProduto
+
+Camada de Domínio / Modelo
+  ├── Produto, ProdutoReal, ProdutoNulo
+  ├── ProdutoDto, ProdutoRequestDto, ProdutoResponsePayload
+  └── ProdutoMapperImpl
+
+Integração Externa (API)
+  ├── Cotacao
+  └── CotacaoPayload
+
+Camada de Exceção
+  ├── ProdutoNaoEncontradoException
+  ├── EntradaInvalidaException
+  └── ConversaoMoedaException
+```
+
 ## 🏗️ Como Executar a Aplicação
 
 ### ✅ Pré-requisitos
