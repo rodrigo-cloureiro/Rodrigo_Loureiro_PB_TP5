@@ -66,4 +66,10 @@ O workflow é acionado automaticamente nos seguintes eventos:
 
 ### Workflow
 
+#### Pipeline
+
 [![Esteira CI/CD](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5/actions/workflows/ci-cd.yml)
+
+#### Cobertura
+
+[![codecov](https://codecov.io/github/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5/graph/badge.svg?token=GJMWCSSVCR)](https://codecov.io/github/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5)
