@@ -2,7 +2,8 @@
 
 ## 🚀 Visão Geral
 
-Este projeto é uma aplicação Java Spring Boot integrada com pipelines automatizados via GitHub Actions.
+Este projeto é uma aplicação Java Spring Boot integrada com pipelines automatizados via GitHub
+Actions.
 O objetivo é fornecer uma base sólida para desenvolvimento, testes e deploy contínuo.
 
 ## 🏗️ Como Executar a Aplicação
@@ -62,3 +63,7 @@ O workflow é acionado automaticamente nos seguintes eventos:
 | `push`              | Quando há push no branch `main`                |
 | `pull_request`      | Ao abrir ou atualizar PRs para o branch `main` |
 | `workflow_dispatch` | Execução manual pelo GitHub                    |
+
+### Workflow
+
+[![Esteira CI/CD](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rodrigo-cloureiro/Rodrigo_Loureiro_PB_TP5/actions/workflows/ci-cd.yml)

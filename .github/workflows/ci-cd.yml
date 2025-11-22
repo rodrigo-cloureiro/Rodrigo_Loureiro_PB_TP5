@@ -105,6 +105,12 @@ jobs:
             exit 1;
           }
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: target/site/jacoco/jacoco.xml
+
       - name: Mover report JaCoCo
         run: mv target/site/jacoco/ reports/${{ github.head_ref || github.ref_name }}/jacoco
 
