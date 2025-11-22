@@ -26,7 +26,8 @@ public class BaseTest {
                 .addArguments("--disable-gpu");
 
         // this.driver = new ChromeDriver(options);
-        URI seleniumHubUri = URI.create("http://localhost:4444/wd/hub");
+        // URI seleniumHubUri = URI.create("http://localhost:4444/wd/hub");
+        URI seleniumHubUri = URI.create("http://selenium:4444/wd/hub");
         this.driver = new RemoteWebDriver(seleniumHubUri.toURL(), options);
     }
 
