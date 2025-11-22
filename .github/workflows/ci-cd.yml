@@ -286,7 +286,7 @@ jobs:
           echo "Aplicação está saudável!"
 
       - name: Executa os testes
-        run: mvn test -Dgroups=Selenium
+        run: mvn test -Dgroups=Selenium -Djacoco.skip=true
 
       - name: Logs da aplicação (em caso de falha)
         if: failure()
