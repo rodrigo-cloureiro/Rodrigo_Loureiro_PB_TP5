@@ -126,19 +126,6 @@ jobs:
           target: 'http://localhost:8080'
           cmd_options: '-a -m 10 -T 60 -I'
 
-      - name: Criar pasta de destino e mover relatórios do ZAP
-        if: always()
-        run: |
-          BRANCH="${{ github.head_ref || github.ref_name }}"
-          mkdir -p reports/$BRANCH/zap
-          
-          cp zap/report.html   reports/$BRANCH/zap-report.html   || echo "HTML não gerado"
-          cp zap/report.md     reports/$BRANCH/zap-report.md     || echo "MD não gerado"
-          cp zap/report.json   reports/$BRANCH/zap-report.json   || echo "JSON não gerado"
-          
-          echo "Relatórios ZAP movidos para reports/$BRANCH/:"
-          ls -la reports/$BRANCH/
-
       - name: Parar aplicação
         if: always()
         run: pkill -f 'spring-boot:run' || true
